@@ -2,18 +2,21 @@
 
 package assign2;
 
-public class LwtStack {
+import java.lang.reflect.Array;
+
+public class LwtStack<E> {
 	
 	private int top = 0;
 	private int size = 0;
-	public int[] stack;
+	public E[] stack;
 	
-	public LwtStack(int n) {
-		stack = new int[n];
+	@SuppressWarnings("unchecked")
+	public LwtStack(Class<E> c, int n) {
+		stack = (E[]) Array.newInstance(c, n);
 		size = n;
 	}
 	
-	public void push(int n) throws LwtStackFull {		
+	public void push(E n) throws LwtStackFull {		
 		if(this.isFull()) {
 			throw new LwtStackFull ("stack is full");
 		} else {
@@ -22,13 +25,13 @@ public class LwtStack {
 		}
 	}
 	
-	public int pop() {
+	public E pop() {
 		if(this.isEmpty()) {
 			throw new LwtStackEmpty ("stack is empty");
 		} else {
-			int popInt = stack[top - 1];
+			E popVar = stack[top - 1];
 			top--;
-			return popInt;
+			return popVar;
 		}
 	}
 	

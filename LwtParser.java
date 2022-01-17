@@ -11,8 +11,8 @@ public class LwtParser {
 	}
 	
 	public static String parsing(String str) {
-		LwtStack intStack = new LwtStack(str.length());
-		Stack<Character> brackStack = new Stack<>();
+		LwtStack<Integer> intStack = new LwtStack<Integer>(Integer.class, str.length());
+		LwtStack<Character> brackStack = new LwtStack<Character>(Character.class, str.length());
 		StringBuilder sb = new StringBuilder();
 		int c = 1;
 		
@@ -29,14 +29,11 @@ public class LwtParser {
 			} else if (str.charAt(i) == ')' || str.charAt(i) == ']' || str.charAt(i) == '}') {
 				if(brackStack.isEmpty()) {
 					return "cannot parse";
-				} else if (str.charAt(i) == ')' && brackStack.peek() == '(') {
-					brackStack.pop();
+				} else if (str.charAt(i) == ')' && brackStack.pop() == '(') {
 					sb.append(intStack.pop());
-				} else if (str.charAt(i) == ']' && brackStack.peek() == '[') {
-					brackStack.pop();
+				} else if (str.charAt(i) == ']' && brackStack.pop() == '[') {
 					sb.append(intStack.pop());
-				} else if (str.charAt(i) == '}' && brackStack.peek() == '{') {
-					brackStack.pop();
+				} else if (str.charAt(i) == '}' && brackStack.pop() == '{') {
 					sb.append(intStack.pop());
 				} else {
 					return "cannot parse";
